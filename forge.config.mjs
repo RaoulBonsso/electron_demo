@@ -4,6 +4,7 @@ import { MakerDeb } from '@electron-forge/maker-deb';
 import { MakerRpm } from '@electron-forge/maker-rpm';
 import { VitePlugin } from '@electron-forge/plugin-vite';
 import { FusesPlugin } from '@electron-forge/plugin-fuses';
+import { PublisherGitHub } from '@electron-forge/publisher-github';
 import { FuseV1Options, FuseVersion } from '@electron/fuses';
 
 const config = {
@@ -16,6 +17,17 @@ const config = {
     new MakerZIP({}, ['darwin']),
     new MakerRpm({}),
     new MakerDeb({}),
+  ],
+  publishers: [
+    new PublisherGitHub({
+      repository: {
+        owner: 'RaoulBonsso',
+        name: 'electron_demo',
+      },
+      // Le token est lu depuis la variable d'environnement GITHUB_TOKEN
+      draft: true,
+      prerelease: false,
+    }),
   ],
   plugins: [
     new VitePlugin({
